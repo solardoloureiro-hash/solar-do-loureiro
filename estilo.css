@@ -1,0 +1,960 @@
+/* ==========================================================================
+   SOLAR DO LOUREIRO | LINK IN BIO — IDENTIDADE AZULEJO PORTUGUÊS
+   Paleta Principal:
+   - Azul Cobalto de Azulejo: #1B4D89
+   - Dourado Clássico:        #C5A059
+   - Branco Porcelana:        rgba(255, 255, 255, 0.92)
+   ========================================================================== */
+
+:root {
+  /* ─── Azulejo Color Palette ─── */
+  --azulejo-blue:       #1B4D89;
+  --azulejo-blue-deep:  #0a2d5a;
+  --azulejo-blue-light: #2a6ab8;
+  --azulejo-blue-glow:  rgba(27, 77, 137, 0.5);
+  --gold:               #C5A059;
+  --gold-light:         #d4b06c;
+  --gold-cream:         #F4E8C1;
+  --gold-dim:           rgba(197, 160, 89, 0.35);
+  --porcelain:          rgba(255, 255, 255, 0.92);
+  --porcelain-soft:     rgba(255, 255, 255, 0.75);
+
+  /* ─── Theme ─── */
+  --bg-deep:            #0d1a33;
+  --text-primary:       #FFFFFF;
+  --text-secondary:     #E2E8F0;
+  --text-muted:         rgba(226, 232, 240, 0.65);
+
+  /* ─── Card Styling ─── */
+  --card-bg:            rgba(10, 45, 90, 0.82);
+  --card-bg-hover:      rgba(15, 60, 115, 0.9);
+  --card-border:        rgba(197, 160, 89, 0.6);
+  --card-border-hover:  rgba(197, 160, 89, 0.95);
+  --card-shadow:        0 4px 18px rgba(0, 0, 0, 0.35), 0 0 15px rgba(10, 45, 90, 0.4), inset 0 0 12px rgba(197, 160, 89, 0.08);
+  --card-shadow-hover:  0 6px 24px rgba(0, 0, 0, 0.45), 0 0 20px rgba(197, 160, 89, 0.45), 0 0 14px rgba(27, 77, 137, 0.5);
+
+  /* ─── Typography ─── */
+  --font-serif:         'Cinzel', 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans:          'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* ─── Transitions ─── */
+  --transition-smooth:  all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast:    all 0.2s ease;
+  --glass-blur:         blur(12px);
+}
+
+/* --------------------------------------------------------------------------
+   RESET & BASE
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background-color: var(--bg-deep);
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   VÍDEO DE FUNDO
+   -------------------------------------------------------------------------- */
+.video-background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 20%, #142d52 0%, var(--bg-deep) 60%, #0a0f1a 100%);
+}
+
+.bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform: scale(1.03);
+}
+
+/* Overlay suave — vídeo visível por baixo */
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 26, 51, 0.50) 0%,
+    rgba(13, 26, 51, 0.40) 40%,
+    rgba(13, 26, 51, 0.60) 80%,
+    rgba(13, 26, 51, 0.80) 100%
+  );
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   AZULEJO ORNAMENT BORDERS
+   -------------------------------------------------------------------------- */
+.azulejo-ornament {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.top-ornament {
+  top: 0;
+}
+
+.bottom-ornament {
+  bottom: 0;
+}
+
+.azulejo-ornament svg {
+  width: 100%;
+  height: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   LAYOUT MOBILE-FIRST
+   -------------------------------------------------------------------------- */
+.page-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: calc(env(safe-area-inset-top, 16px) + 16px) 20px calc(env(safe-area-inset-bottom, 16px) + 36px);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 3;
+}
+
+/* --------------------------------------------------------------------------
+   TOP NAVIGATION — SHARE BUTTON
+   -------------------------------------------------------------------------- */
+.top-nav {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.share-btn-azulejo {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(27, 77, 137, 0.25);
+  border: 1px solid var(--gold-dim);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  outline: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.share-btn-azulejo svg {
+  width: 18px;
+  height: 18px;
+}
+
+.share-btn-azulejo:hover {
+  background: rgba(27, 77, 137, 0.5);
+  border-color: var(--gold);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 16px rgba(27, 77, 137, 0.4);
+}
+
+.share-btn-azulejo:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* --------------------------------------------------------------------------
+   PROFILE HEADER — LOGÓTIPO CIRCULAR COM MOLDURA AZULEJO & DOURADO
+   -------------------------------------------------------------------------- */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 24px;
+  animation: fadeInDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fadeInDown {
+  0%   { opacity: 0; transform: translateY(-14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.avatar-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 18px;
+}
+
+/* Anel com gradiente Azulejo Azul → Dourado */
+.avatar-ring-azulejo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--azulejo-blue) 0%, var(--gold) 45%, var(--azulejo-blue-light) 80%, var(--gold-light) 100%);
+  box-shadow:
+    0 0 0 3px rgba(13, 26, 51, 0.6),
+    0 8px 28px rgba(27, 77, 137, 0.4),
+    0 0 14px var(--gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.avatar-ring-azulejo:hover {
+  transform: scale(1.04);
+  box-shadow:
+    0 0 0 3px rgba(13, 26, 51, 0.6),
+    0 12px 36px rgba(27, 77, 137, 0.5),
+    0 0 22px var(--gold-dim);
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--porcelain);
+  display: block;
+  background-color: #FFFFFF;
+}
+
+/* Título Elegante / Serifado */
+.profile-title {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+  margin-bottom: 6px;
+}
+
+.profile-tagline {
+  font-family: var(--font-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+.profile-bio {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  max-width: 380px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   SEPARADOR DOURADO ORNAMENTAL
+   -------------------------------------------------------------------------- */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0 20px;
+  position: relative;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+.divider-diamond {
+  color: var(--gold);
+  font-size: 0.65rem;
+  padding: 0 12px;
+  opacity: 0.7;
+}
+
+.gold-divider.small {
+  margin: 0 0 12px;
+}
+
+/* --------------------------------------------------------------------------
+   BLOCOS DE LINK — ESTILO TRADICIONAL AZULEJO COBALTO & TALHA DOURADA
+   Visual nobre de azulejo tradicional português: azul cobalto e ouro
+   -------------------------------------------------------------------------- */
+.links-section {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+/* Card Base — Fundo azul cobalto translúcido com borda dourada elegante */
+.azulejo-card-btn,
+.link-card,
+.btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background-color: rgba(10, 45, 90, 0.82);
+  border: 1px solid rgba(197, 160, 89, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), 0 0 15px rgba(10, 45, 90, 0.4), inset 0 0 12px rgba(197, 160, 89, 0.08);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Textura Real de Azulejo Floral Português Tradicional (Ramagens, Flores e Arabescos) */
+.azulejo-card-btn::before,
+.link-card::before,
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('azulejo-pattern.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  mix-blend-mode: overlay;
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.35s ease, transform 0.4s ease;
+}
+
+/* Efeito ao passar o rato (hover): fundo ligeiramente mais claro e padrão floral mais vivo */
+.azulejo-card-btn:hover,
+.link-card:hover,
+.btn:hover {
+  background-color: rgba(15, 60, 115, 0.90);
+  border-color: rgba(197, 160, 89, 0.95);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45), 0 0 20px rgba(197, 160, 89, 0.45), 0 0 14px rgba(27, 77, 137, 0.5);
+  transform: translateY(-2px);
+}
+
+.azulejo-card-btn:hover::before,
+.link-card:hover::before,
+.btn:hover::before {
+  opacity: 0.38;
+  transform: scale(1.02);
+}
+
+.azulejo-card-btn:active,
+.link-card:active,
+.btn:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* Destaque Ementa */
+.ementa-highlight {
+  background: rgba(10, 45, 90, 0.88);
+  border: 1px solid rgba(197, 160, 89, 0.85);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.38), 0 0 18px rgba(197, 160, 89, 0.25);
+}
+
+.ementa-highlight:hover {
+  background: rgba(15, 60, 115, 0.95);
+  border-color: #DAA520;
+  box-shadow: 0 6px 26px rgba(0, 0, 0, 0.48), 0 0 24px rgba(197, 160, 89, 0.55);
+}
+
+/* Ícone Circular à Esquerda: pequeno círculo com fundo azul escuro */
+.card-icon-circle {
+  position: relative;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  background: #061833;
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+  color: #C5A059;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.card-icon-circle svg {
+  width: 20px;
+  height: 20px;
+  stroke: #C5A059;
+  transition: all 0.25s ease;
+}
+
+.azulejo-card-btn:hover .card-icon-circle {
+  transform: scale(1.06);
+  border-color: #DAA520;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 12px rgba(197, 160, 89, 0.5);
+  color: #DAA520;
+}
+
+.azulejo-card-btn:hover .card-icon-circle svg {
+  stroke: #DAA520;
+}
+
+/* Garantir ícones dourados tradicionais em círculo azul escuro para cada categoria */
+.maps-icon,
+.phone-icon,
+.horario-icon,
+.ementa-icon,
+.instagram-icon,
+.email-icon {
+  background: #061833;
+  color: #C5A059;
+  border-color: rgba(197, 160, 89, 0.45);
+}
+
+.maps-icon svg,
+.phone-icon svg,
+.horario-icon svg,
+.ementa-icon svg,
+.instagram-icon svg,
+.email-icon svg {
+  stroke: #C5A059;
+}
+
+/* Texto do Bloco */
+.card-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Títulos dos blocos: cor dourada/creme (#F4E8C1) e fonte serifada tradicional */
+.card-label {
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #F4E8C1;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Subtextos/Descrições: tom branco suave (#E2E8F0) */
+.card-detail {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: #E2E8F0;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  letter-spacing: 0.01em;
+  opacity: 0.92;
+}
+
+/* Seta tradicional dourada */
+.card-arrow {
+  position: relative;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(197, 160, 89, 0.7);
+  margin-left: 8px;
+  transition: all 0.25s ease;
+}
+
+.card-arrow svg {
+  width: 16px;
+  height: 16px;
+  stroke: rgba(197, 160, 89, 0.7);
+}
+
+.azulejo-card-btn:hover .card-arrow {
+  color: #F4E8C1;
+  transform: translateX(3px);
+}
+
+.azulejo-card-btn:hover .card-arrow svg {
+  stroke: #F4E8C1;
+}
+
+/* Horário — sem seta, estilo informativo */
+.horario-card {
+  cursor: default;
+}
+
+.horario-card:hover {
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   RODAPÉ
+   -------------------------------------------------------------------------- */
+.page-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.copyright-text {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* --------------------------------------------------------------------------
+   MODAL — EMENTA & PARTILHA (Estilo Azulejo)
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 18, 38, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.azulejo-modal-card {
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(135deg, rgba(15, 25, 50, 0.94) 0%, rgba(18, 22, 38, 0.96) 100%);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(27, 77, 137, 0.2);
+  transform: translateY(16px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-backdrop.active .azulejo-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.ementa-modal-card {
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modal-heading {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.close-modal-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(197, 160, 89, 0.25);
+  color: var(--porcelain-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.close-modal-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.close-modal-btn:hover {
+  background: rgba(197, 160, 89, 0.2);
+  transform: rotate(90deg);
+}
+
+.ementa-scrollable {
+  overflow-y: auto;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ementa-scrollable::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ementa-scrollable::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+  border-radius: 10px;
+}
+
+.ementa-notice-badge {
+  padding: 10px 14px;
+  background: rgba(197, 160, 89, 0.1);
+  border: 1px dashed rgba(197, 160, 89, 0.35);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.ementa-category {
+  background: rgba(27, 77, 137, 0.08);
+  border: 1px solid rgba(27, 77, 137, 0.2);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.ementa-cat-title {
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.ementa-dish {
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.ementa-dish:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.dish-name {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.dish-desc {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.modal-action-wrapper {
+  margin-top: 10px;
+}
+
+.btn-instagram-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--azulejo-blue) 0%, var(--azulejo-blue-deep) 100%);
+  border: 1px solid var(--gold-dim);
+  color: #FFFFFF;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.86rem;
+  box-shadow: 0 6px 20px rgba(27, 77, 137, 0.35);
+  transition: var(--transition-fast);
+}
+
+.btn-instagram-cta:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--azulejo-blue-light) 0%, var(--azulejo-blue) 100%);
+  box-shadow: 0 10px 28px rgba(27, 77, 137, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   MODAL DE PARTILHA
+   -------------------------------------------------------------------------- */
+.modal-profile-preview {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  background: rgba(27, 77, 137, 0.1);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+
+.modal-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--gold);
+}
+
+.modal-name {
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.modal-url {
+  font-size: 0.76rem;
+  color: var(--gold);
+}
+
+.qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+#qrCanvas {
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  width: 140px;
+  height: 140px;
+}
+
+.qr-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.copy-link-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  border-radius: 9999px;
+  padding: 4px 5px 4px 16px;
+  margin-bottom: 18px;
+}
+
+.copy-link-bar input {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.83rem;
+  width: 100%;
+  outline: none;
+  font-family: var(--font-sans);
+}
+
+.btn-copy {
+  padding: 8px 16px;
+  background: var(--azulejo-blue);
+  border: none;
+  border-radius: 9999px;
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-copy:hover {
+  background: var(--azulejo-blue-light);
+  transform: scale(1.03);
+}
+
+.btn-copy.copied {
+  background: #00C853;
+  color: #0d1a33;
+}
+
+.modal-share-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.share-channel-btn {
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(197, 160, 89, 0.15);
+  background: rgba(27, 77, 137, 0.12);
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.share-channel-btn:hover {
+  background: rgba(27, 77, 137, 0.3);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   TOAST NOTIFICATION
+   -------------------------------------------------------------------------- */
+.toast-card {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: linear-gradient(135deg, var(--azulejo-blue), var(--azulejo-blue-deep));
+  border: 1px solid var(--gold-dim);
+  box-shadow: 0 10px 30px rgba(27, 77, 137, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 11px 20px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.toast-card.active {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: var(--azulejo-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.toast-text {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   DESKTOP RESPONSIVENESS
+   -------------------------------------------------------------------------- */
+@media (min-width: 641px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .page-wrapper {
+    background: rgba(13, 26, 51, 0.45);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 32px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(27, 77, 137, 0.15);
+    margin: 36px auto;
+    min-height: auto;
+    padding: 30px 26px 36px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   STAGGER ANIMATIONS
+   -------------------------------------------------------------------------- */
+.azulejo-card-btn {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.azulejo-card-btn:nth-child(1) { animation-delay: 0.1s; }
+.azulejo-card-btn:nth-child(2) { animation-delay: 0.18s; }
+.azulejo-card-btn:nth-child(3) { animation-delay: 0.26s; }
+.azulejo-card-btn:nth-child(4) { animation-delay: 0.34s; }
+.azulejo-card-btn:nth-child(5) { animation-delay: 0.42s; }
+.azulejo-card-btn:nth-child(6) { animation-delay: 0.50s; }
+
+@keyframes fadeInUp {
+  0%   { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
